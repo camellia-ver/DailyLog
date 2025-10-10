@@ -4,14 +4,16 @@ import lombok.Getter;
 
 @Getter
 public enum Emotion {
-    HAPPY("행복"),
-    SAD("슬픔"),
-    ANGER("분노"),
-    CALM("평온");
+    HAPPY(5,"행복"),
+    SAD(-3,"슬픔"),
+    ANGER(-5,"분노"),
+    CALM(3,"평온");
 
+    private final int score;
     private final String description;
 
-    Emotion(String description){
+    Emotion(int score, String description){
+        this.score = score;
         this.description = description;
     }
 }
