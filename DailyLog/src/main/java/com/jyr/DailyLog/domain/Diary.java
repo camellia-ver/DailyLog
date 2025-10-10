@@ -31,10 +31,10 @@ public class Diary extends BaseEntity{
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private EmotionLevel emotion;
+    private Emotion emotion;
 
     @Builder
-    public Diary(User user, LocalDate date, String content, EmotionLevel emotion){
+    public Diary(User user, LocalDate date, String content, Emotion emotion){
         this.user = user;
         this.date = date;
         this.content = content;
