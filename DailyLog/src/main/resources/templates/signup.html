@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="/js/signup.js"></script>
+
+    <style>
+        /* Navbar 링크를 왼쪽 정렬 */
+        .navbar .nav-links {
+          display: flex !important;         /* Flex로 정렬 */
+          justify-content: flex-end !important; /* 왼쪽 정렬 */
+          flex: 1;                           /* 공간 확보 */
+        }
+
+        .navbar .nav-link {
+          color: #2C3E50 !important;
+          text-decoration: none !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="navbar-brand"><span><a href="/" class="nav-link">🌿 DailyLog</a></span></div>
+    <div class="nav-links">
+        <a href="/" class="nav-link">홈</a>
+        <a href="/login" class="nav-link">로그인</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle">🌓</button>
+</nav>
+
+<!-- Main Content -->
+<main class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px;">
+        <h2 class="mb-4 text-center">회원가입</h2>
+        <form id="signupForm">
+            <div class="mb-3">
+                <label for="name" class="form-label">이름</label>
+                <input type="text" class="form-control" id="name" placeholder="홍길동" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">이메일</label>
+                <input type="email" class="form-control" id="email" placeholder="example@email.com" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">비밀번호</label>
+                <input type="password" class="form-control" id="password" placeholder="비밀번호" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">비밀번호 확인</label>
+                <input type="password" class="form-control" id="confirmPassword" placeholder="비밀번호 확인" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">가입하기</button>
+        </form>
+    </div>
+</main>
+
+<div id="footer-include" th:replace="fragments/footer :: footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
