@@ -59,7 +59,8 @@ User
  ├── email
  ├── password
  ├── nickname
- └── created_at
+ ├── created_at
+ └── updated_at
 
 Diary
  ├── id (PK)
