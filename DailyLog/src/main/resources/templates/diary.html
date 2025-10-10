@@ -7,7 +7,7 @@
     <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
-<div id="nav-include"></div>
+<div id="nav-include" th:replace="fragments/nav :: navbar"></div>
 
 <main class="container py-4">
     <div class="card p-4">
@@ -26,9 +26,8 @@
                 </div>
             </div>
 
-
             <div class="col-lg-8">
-                <h5>오늘의 일기</h5>
+                <h5>오늘의 일기(2025-10-10)</h5>
                 <form>
                     <div class="mb-3">
                         <textarea class="form-control" maxlength="500" placeholder="오늘의 기분과 생각을 적어보세요 (최대 500자)"></textarea>
