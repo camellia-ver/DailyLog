@@ -1,18 +1,51 @@
 package com.jyr.DailyLog.controller;
 
+import com.jyr.DailyLog.dto.UserSignupRequestDto;
+import com.jyr.DailyLog.service.UserService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class UserController {
+    private final UserService userService;
+
     @GetMapping("/login")
     public String login(){
         return "login";
     }
 
     @GetMapping("/signup")
-    public String signup(){
+    public String showSignupForm(Model model){
+        model.addAttribute("signupForm", new UserSignupRequestDto());
         return "signup";
+    }
+
+    @PostMapping("/signup")
+    public String signup(@ModelAttribute("signupForm") @Valid UserSignupRequestDto requestDto,
+                         BindingResult result,
+                         Model model){
+        if (result.hasErrors()){
+            model.addAttribute("errors", result.getAllErrors());
+            return "signup";
+        }
+
+        try{
+            userService.signup(requestDto);
+            return "redirect:/login";
+        } catch (IllegalArgumentException e){
+            model.addAttribute("signupError", e.getMessage());
+            return "signup";
+        }
     }
 
     @GetMapping("/find-password")
