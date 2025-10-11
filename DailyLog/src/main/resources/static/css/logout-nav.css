@@ -1,0 +1,11 @@
+        /* Navbar 링크 오른쪽 정렬 */
+        .navbar .nav-links {
+            display: flex !important;
+            gap: 1rem;
+            justify-content: flex-end !important;
+            flex: 1;
+        }
+        .navbar .nav-link {
+            color: #2C3E50 !important;
+            text-decoration: none !important;
+        }
