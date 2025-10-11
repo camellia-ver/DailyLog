@@ -1,5 +1,6 @@
 package com.jyr.DailyLog.domain;
 
+import com.jyr.DailyLog.domain.enums.Emotion;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 테마 토글
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', () => {
-        const theme = document.documentElement.getAttribute('data-theme');
-        document.documentElement.setAttribute('data-theme', theme === 'light' ? 'dark' : 'light');
-    });
+//    const themeToggle = document.getElementById('themeToggle');
+//    themeToggle.addEventListener('click', () => {
+//        const theme = document.documentElement.getAttribute('data-theme');
+//        document.documentElement.setAttribute('data-theme', theme === 'light' ? 'dark' : 'light');
+//    });
 
     // 입력 필드 선택
     const passwordInput = document.getElementById('password');

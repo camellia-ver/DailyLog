@@ -1,8 +1,10 @@
-package com.jyr.DailyLog.domain;
+package com.jyr.DailyLog.domain.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum Emotion {
     HAPPY(7,"행복"),
     SAD(3,"슬픔"),
@@ -11,9 +13,4 @@ public enum Emotion {
 
     private final int score;
     private final String description;
-
-    Emotion(int score, String description){
-        this.score = score;
-        this.description = description;
-    }
 }

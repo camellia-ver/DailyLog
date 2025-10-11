@@ -1,6 +1,7 @@
 package com.jyr.DailyLog.service;
 
 import com.jyr.DailyLog.domain.User;
+import com.jyr.DailyLog.domain.enums.Role;
 import com.jyr.DailyLog.dto.UserSignupRequestDto;
 import com.jyr.DailyLog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class UserService {
                 .email(requestDto.getEmail())
                 .password(encodedPassword)
                 .nickname(requestDto.getNickname())
+                .role(Role.ROLE_USER)
                 .build();
 
         try{
