@@ -35,7 +35,6 @@ public class UserController {
                          BindingResult result,
                          Model model){
         if (result.hasErrors()){
-            model.addAttribute("errors", result.getAllErrors());
             return "signup";
         }
 
