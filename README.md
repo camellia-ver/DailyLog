@@ -18,7 +18,6 @@ DailyLog는 하루하루의 감정과 생각을 기록할 수 있는 **감정 �
 | **ORM**        | Spring Data JPA                      |
 | **Security**   | Spring Security, JWT                 |
 | **Build Tool** | Gradle                               |
-| **API Docs**   | Swagger / Springdoc OpenAPI          |
 | **Others**     | Lombok, Validation |
 
 ---
