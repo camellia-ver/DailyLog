@@ -4,8 +4,10 @@ import com.jyr.DailyLog.domain.User;
 import com.jyr.DailyLog.domain.enums.Role;
 import com.jyr.DailyLog.dto.UserSignupRequestDto;
 import com.jyr.DailyLog.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Transactional(readOnly = true)
+    public Long findUserId(String email){
+        if (email == null || email.isBlank()){
+            throw new IllegalArgumentException("email must not be null or blank");
+        }
+
+        return userRepository.findByEmail(email)
+                .map(User::getId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found for email"));
+    }
 
     @Transactional
     public void signup(UserSignupRequestDto requestDto){

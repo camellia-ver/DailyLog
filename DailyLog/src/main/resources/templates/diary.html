@@ -27,13 +27,13 @@
             </div>
 
             <div class="col-lg-8">
-                <h5>오늘의 일기(2025-10-10)</h5>
+                <h5 th:text="|오늘의 일기 (${today})|">오늘의 일기(2025-10-10)</h5>
                 <form>
                     <div class="mb-3">
                         <textarea class="form-control" maxlength="500" placeholder="오늘의 기분과 생각을 적어보세요 (최대 500자)"></textarea>
                     </div>
                     <div class="d-flex gap-2">
-                        <button class="btn btn-primary">저장</button>
+                        <button class="btn btn-primary" th:text="${isWrite} ? '저장' : '수정'">저장</button>
                         <a class="btn btn-outline-secondary" href="index.html">취소</a>
                     </div>
                 </form>
