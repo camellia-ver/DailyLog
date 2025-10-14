@@ -97,7 +97,6 @@ Diary
 
 ## 📈 향후 개선 예정
 
-* [ ] 감정 통계 시각화 (React, Chart.js)
 * [ ] 이미지 첨부 기능
 * [ ] 일기 검색 (키워드, 감정별)
 * [ ] OAuth 로그인 (Google, Kakao)
