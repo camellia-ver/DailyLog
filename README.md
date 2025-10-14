@@ -10,17 +10,16 @@ DailyLog는 하루하루의 감정과 생각을 기록할 수 있는 **감정 �
 
 ## 🛠️ Tech Stack
 
-| 구분             | 기술                                   |
-| -------------- | ------------------------------------ |
-| **Language**   | Java 21                              |
-| **Framework**  | Spring Boot 3.5.6                     |
-| **Database**   | MySQL                      |
-| **ORM**        | Spring Data JPA                      |
-| **Security**   | Spring Security, JWT                 |
-| **Build Tool** | Gradle                               |
-| **Others**     | Lombok, Validation |
-
----
+| 구분             | 기술                                           |
+| -------------- | -------------------------------------------- |
+| **Language**   | Java 21                        |
+| **Framework**  | Spring Boot 3.5.6                            |
+| **Database**   | MySQL                                        |
+| **ORM**        | Spring Data JPA                              |
+| **Security**   | Spring Security, JWT                         |
+| **Build Tool** | Gradle                                       |
+| **Frontend**   | Chart.js, Bootstrap, HTML, CSS, JS, Thymeleaf |
+| **Others**     | Lombok,Validation                           |
 
 ## ⚙️ 주요 기능
 
