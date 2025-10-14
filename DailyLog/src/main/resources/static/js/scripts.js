@@ -1,27 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // nav/footer include
-    ['nav','footer'].forEach(name => {
-        const el = document.getElementById(name + '-include');
-        if (!el) return;
-        fetch(`partials/${name}.html`)
-            .then(r => r.text())
-            .then(html => el.innerHTML = html);
-    });
-
     // 연도 자동 갱신
     const yearEl = document.getElementById('year');
     if(yearEl) yearEl.textContent = new Date().getFullYear();
-
-    // emoji 클릭 이벤트 (이벤트 위임)
-    document.addEventListener('click', (e) => {
-        const btn = e.target.closest('.emoji-btn');
-        if (!btn) return;
-        document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('emoji-selected'));
-        btn.classList.add('emoji-selected');
-        const input = document.getElementById('selectedEmotion');
-        if(input) input.value = btn.dataset.value;
-    });
 
     // 차트 초기화
     if(window.Chart){

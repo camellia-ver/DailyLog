@@ -19,13 +19,12 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
-    public Long findUserId(String email){
+    public User findUser(String email){
         if (email == null || email.isBlank()){
             throw new IllegalArgumentException("email must not be null or blank");
         }
 
         return userRepository.findByEmail(email)
-                .map(User::getId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found for email"));
     }
 

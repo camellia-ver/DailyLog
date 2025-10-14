@@ -23,7 +23,7 @@ public class DiaryController {
         LocalDate today = LocalDate.now();
         model.addAttribute("today",today.toString());
 
-        Long userId = userService.findUserId(userDetails.getUsername());
+        Long userId = userService.findUser(userDetails.getUsername()).getId();
         boolean isWrite = !diaryService.isTodayDiary(userId, today);
         model.addAttribute("isWrite", isWrite);
 
