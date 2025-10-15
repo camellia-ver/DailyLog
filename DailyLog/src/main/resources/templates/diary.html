@@ -17,10 +17,26 @@
                 <h5>감정 선택</h5>
                 <div class="d-flex flex-column gap-2">
                     <div class="d-flex gap-2">
-                        <div class="emoji-btn" data-emoji data-value="happy"> <div>😊</div> <div class="small">행복</div></div>
-                        <div class="emoji-btn" data-emoji data-value="sad"> <div>😞</div> <div class="small">슬픔</div></div>
-                        <div class="emoji-btn" data-emoji data-value="angry"> <div>😡</div> <div class="small">분노</div></div>
-                        <div class="emoji-btn" data-emoji data-value="calm"> <div>😐</div> <div class="small">평온</div></div>
+                        <div class="emoji-btn" data-emoji data-value="happy"
+                             th:classappend="${savedDiary != null and savedDiary.emotion == 'happy'} ? ' emoji-selected'">
+                            <div>😊</div>
+                            <div class="small">행복</div>
+                        </div>
+                        <div class="emoji-btn" data-emoji data-value="sad"
+                             th:classappend="${savedDiary != null and savedDiary.emotion == 'sad'} ? ' emoji-selected'">
+                            <div>😞</div>
+                            <div class="small">슬픔</div>
+                        </div>
+                        <div class="emoji-btn" data-emoji data-value="angry"
+                             th:classappend="${savedDiary != null and savedDiary.emotion == 'angry'} ? ' emoji-selected'">
+                            <div>😡</div>
+                            <div class="small">분노</div>
+                        </div>
+                        <div class="emoji-btn" data-emoji data-value="calm"
+                             th:classappend="${savedDiary != null and savedDiary.emotion == 'calm'} ? ' emoji-selected'">
+                            <div>😐</div>
+                            <div class="small">평온</div>
+                        </div>
                     </div>
                     <div class="small text-muted">선택하면 강조 표시됩니다.</div>
                 </div>
@@ -30,11 +46,15 @@
             <div class="col-lg-8">
                 <h5 th:text="|오늘의 일기 (${today})|">오늘의 일기(2025-10-10)</h5>
                 <form id="diaryForm">
-                    <input type="hidden" id="selectedEmotion" name="emotion" value="">
+                    <input type="hidden" id="selectedEmotion" th:value="${savedDiary != null ? savedDiary.emotion : ''}">
                     <input type="hidden" name="today" th:value="${today}" id="todayInput">
 
                     <div class="mb-3">
-                        <textarea id="diaryContent" class="form-control" maxlength="500" placeholder="오늘의 기분과 생각을 적어보세요 (최대 500자)"></textarea>
+                        <textarea id="diaryContent"
+                                  class="form-control"
+                                  maxlength="500"
+                                  placeholder="오늘의 기분과 생각을 적어보세요 (최대 500자)"
+                                  th:text="${isWrite} ? '' : ${savedDiary.content}"></textarea>
                     </div>
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-primary" id="submitBtn" th:text="${isWrite} ? '저장' : '수정'">저장</button>

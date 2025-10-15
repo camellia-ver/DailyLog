@@ -1,5 +1,6 @@
 package com.jyr.DailyLog.controller;
 
+import com.jyr.DailyLog.dto.DiaryResponseDto;
 import com.jyr.DailyLog.service.DiaryService;
 import com.jyr.DailyLog.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,11 @@ public class DiaryController {
         Long userId = userService.findUser(userDetails.getUsername()).getId();
         boolean isWrite = !diaryService.isTodayDiary(userId, today);
         model.addAttribute("isWrite", isWrite);
+
+        if (!isWrite){
+            DiaryResponseDto savedDiary = diaryService.findSavedDiary(userId, today);
+            model.addAttribute("savedDiary", savedDiary);
+        }
 
         return "diary";
     }

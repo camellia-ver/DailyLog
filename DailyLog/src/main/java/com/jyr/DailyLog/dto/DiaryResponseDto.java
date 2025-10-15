@@ -1,12 +1,11 @@
 package com.jyr.DailyLog.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.LocalDate;
-
 @Data
-public class DiaryWriteRequestDto {
-    private String today;
+@AllArgsConstructor
+public class DiaryResponseDto {
     private String emotion;
     private String content;
 }

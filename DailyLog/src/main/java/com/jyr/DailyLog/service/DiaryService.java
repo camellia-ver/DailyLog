@@ -3,7 +3,9 @@ package com.jyr.DailyLog.service;
 import com.jyr.DailyLog.domain.Diary;
 import com.jyr.DailyLog.domain.User;
 import com.jyr.DailyLog.domain.enums.Emotion;
-import com.jyr.DailyLog.dto.DiaryWriteRequestDto;
+import com.jyr.DailyLog.dto.DiaryRequestDto;
+import com.jyr.DailyLog.dto.DiaryResponseDto;
+import com.jyr.DailyLog.exception.DiaryNotFoundException;
 import com.jyr.DailyLog.repository.DiaryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ public class DiaryService {
         return diaryRepository.existsByUserIdAndDate(userId, today);
     }
 
-    public Diary createDiary(String email, DiaryWriteRequestDto dto){
+    public Diary createDiary(String email, DiaryRequestDto dto){
         User user = userService.findUser(email);
 
         String content = dto.getContent();
@@ -36,5 +38,11 @@ public class DiaryService {
                 .build();
 
         return diaryRepository.save(diary);
+    }
+
+    public DiaryResponseDto findSavedDiary(Long userId, LocalDate today){
+        return diaryRepository.findByUserIdAndDate(userId, today)
+                .map(diary -> new DiaryResponseDto(diary.getEmotion().getValue(), diary.getContent()))
+                .orElseThrow(() -> new DiaryNotFoundException(today + "의 일기를 찾을 수 없습니다."));
     }
 }

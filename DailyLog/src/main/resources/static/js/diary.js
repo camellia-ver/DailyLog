@@ -36,11 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if(!response.ok) throw new Error('서버 에러');
-
-            console.log('성공', response.status);
             alert('저장 완료!');
+            window.location.href = "/";
         }catch (err){
-            console.error(err);
             alert('저장 실패');
         }
     })

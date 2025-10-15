@@ -1,9 +1,8 @@
 package com.jyr.DailyLog.api;
 
 import com.jyr.DailyLog.domain.Diary;
-import com.jyr.DailyLog.dto.DiaryWriteRequestDto;
+import com.jyr.DailyLog.dto.DiaryRequestDto;
 import com.jyr.DailyLog.service.DiaryService;
-import jakarta.servlet.Servlet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/diaries")
@@ -26,7 +24,7 @@ public class DiaryApiController {
     @PostMapping
     public ResponseEntity<Void> createDiary(
             @AuthenticationPrincipal UserDetails userDetails,
-            @RequestBody DiaryWriteRequestDto dto){
+            @RequestBody DiaryRequestDto dto){
         Diary savedDiary = diaryService.createDiary(userDetails.getUsername(), dto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
