@@ -45,4 +45,8 @@ public class DiaryService {
                 .map(diary -> new DiaryResponseDto(diary.getEmotion().getValue(), diary.getContent()))
                 .orElseThrow(() -> new DiaryNotFoundException(today + "의 일기를 찾을 수 없습니다."));
     }
+
+    public Diary updateDiary(String email, DiaryRequestDto dto){
+        return null;
+    }
 }

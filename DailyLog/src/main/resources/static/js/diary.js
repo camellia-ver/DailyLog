@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if(!response.ok) throw new Error('서버 에러');
             alert('저장 완료!');
-            window.location.href = "/";
+            window.location.href = "/diary";
         }catch (err){
             alert('저장 실패');
         }
