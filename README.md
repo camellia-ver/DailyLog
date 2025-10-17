@@ -80,7 +80,7 @@ Diary
 | 로그아웃  | POST   | /api/auth/logout    | 토큰 무효화        |
 | 일기 작성 | POST   | /api/diaries        | 일기 등록         |
 | 일기 조회 | GET    | /api/diaries/{date} | 날짜별 일기 조회     |
-| 일기 수정 | PUT    | /api/diaries/{date} | 일기 내용 수정      |
+| 일기 수정 | PUT    | /api/diaries | 일기 내용 수정      |
 | 일기 삭제 | DELETE | /api/diaries/{date} | 일기 삭제         |
 | 감정 통계 | GET    | /api/statistics     | 감정별 통계 데이터 조회 |
 
