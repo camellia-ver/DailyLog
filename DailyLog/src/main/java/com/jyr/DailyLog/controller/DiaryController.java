@@ -5,6 +5,7 @@ import com.jyr.DailyLog.service.DiaryService;
 import com.jyr.DailyLog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +39,22 @@ public class DiaryController {
     }
 
     @GetMapping("/list")
-    public String diaryList(){
+    public String diaryList(Model model,
+                            @AuthenticationPrincipal UserDetails userDetails){
+        Long userId = userService.findUser(userDetails.getUsername()).getId();
+
+        LocalDate today = LocalDate.now();
+        model.addAttribute("today", today.toString());
+
+        if (diaryService.isTodayDiary(userId, today)){
+            DiaryResponseDto todayDiary = diaryService.findSavedDiary(userId, today);
+            model.addAttribute("emotion", todayDiary.getEmotion());
+            model.addAttribute("content", todayDiary.getContent());
+        }else {
+            model.addAttribute("emotion", "none");
+            model.addAttribute("content", "none");
+        }
+
         return "list";
     }
 

@@ -3,6 +3,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>일기 목록 · DailyLog</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
@@ -17,45 +18,68 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="card p-3">
-                <div class="small text-muted mb-2">달력 (간단한 예시)</div>
-                <div class="border rounded p-3 text-center">(달력 컴포넌트 자리)
-                    <div class="mt-3"><span class="badge bg-warning">10월 10일 · 😊</span></div>
+                <div class="small text-muted mb-2">달력</div>
+                <div class="border rounded p-3 text-center">
+                    <!-- 달력 input 추가 -->
+                    <input type="text" id="myCalendar" placeholder="날짜 선택" class="form-control">
+
+                    <div class="mt-3">
+                       <span id="selectedDateBadge" class="badge bg-warning"
+                             th:text="|${today} · ${emotion eq 'happy' ? '😊 행복' :
+                                 emotion eq 'sad' ? '😢 슬픔' :
+                                 emotion eq 'angry' ? '😡 분노' :
+                                 emotion eq 'calm' ? '😐 평온' : '🙂'}|">
+                            10월 10일 · 🙂
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-lg-8">
             <div class="list-group">
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#diaryModal1">
-                        <div class="fw-semibold">2025-10-10 · 😊 행복</div>
-                        <div class="small text-muted">짧은 미리보기: 오늘은 즐거운 하루였어...</div>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="fw-semibold" th:text="|${today} · ${emotion eq 'happy' ? '😊' :
+                                 emotion eq 'sad' ? '😢 슬픔' :
+                                 emotion eq 'angry' ? '😡 분노' :
+                                 emotion eq 'calm' ? '😐 평온' : '🙂 행복'}|">>2025-10-10 · 😊 행복</div>
+                        <div class="small text-muted" th:text="${#strings.abbreviate(content, 20)}">짧은 미리보기: 오늘은 즐거운 하루였어...</div>
                     </a>
+                </div>
+
+                <div class="card p-3 mb-3">
+                    <h5 class="mb-3">일기 수정</h5>
+                    <form id="editDiaryForm">
+                        <div class="mb-3">
+                            <label for="diaryMood" class="form-label">기분</label>
+                            <select class="form-select" id="diaryMood">
+                                <option value="happy" th:selected="${emotion == 'happy'}">😊 행복</option>
+                                <option value="sad" th:selected="${emotion == 'sad'}">😢 슬픔</option>
+                                <option value="angry" th:selected="${emotion == 'angry'}">😡 화남</option>
+                                <option value="calm" th:selected="${emotion == 'calm'}">😌 편안</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="diaryContent" class="form-label">내용</label>
+                            <textarea id="diaryContent"
+                                      class="form-control"
+                                      maxlength="500"
+                                      th:text="${content}"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary">수정</button>
+                        <button type="button" class="btn btn-primary">삭제</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="diaryModal1" tabindex="-1" aria-labelledby="diaryModalLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="diaryModalLabel1">2025-10-10 · 😊 행복</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
-                </div>
-                <div class="modal-body">
-                    오늘은 즐거운 하루였어. 전체 일기 내용을 여기서 보여줌.
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-primary" href="/diary">수정</a>
-                    <button type="button" class="btn btn-danger">삭제</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </main>
 <div id="footer-include" th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/list.js"></script>
 <script src="js/scripts.js"></script>
 </body>
 </html>
