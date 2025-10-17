@@ -14,12 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
 
         // Thymeleaf에서 isWrite 값 가져오기
-        const isWrite = /*[[${isWrite}]]*/ true; // 서버에서 true/false 전달
+        const isWrite = /*[[${isWrite} == true ? 'true' : 'false'}]]*/ 'false' === 'true';
         const today = document.getElementById('todayInput').value;
         const emotion = document.getElementById('selectedEmotion').value;
         const content = document.getElementById('diaryContent').value;
+        const id = document.getElementById('diaryId').value;
 
-        const url = isWrite ? '/api/diaries' : `/api/diaries/${today}`;
+        const url = '/api/diaries';
         const method = isWrite ? 'POST' : 'PUT';
 
         try{
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Content-Type' : 'application/json'
                 },
                 body: JSON.stringify({
+                    id : id,
                     today: today,
                     emotion: emotion,
                     content: content

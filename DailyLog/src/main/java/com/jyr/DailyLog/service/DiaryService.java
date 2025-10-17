@@ -9,6 +9,7 @@ import com.jyr.DailyLog.exception.DiaryNotFoundException;
 import com.jyr.DailyLog.repository.DiaryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -40,13 +41,26 @@ public class DiaryService {
         return diaryRepository.save(diary);
     }
 
+    @Transactional(readOnly = true)
     public DiaryResponseDto findSavedDiary(Long userId, LocalDate today){
         return diaryRepository.findByUserIdAndDate(userId, today)
-                .map(diary -> new DiaryResponseDto(diary.getEmotion().getValue(), diary.getContent()))
+                .map(diary -> new DiaryResponseDto(diary.getId(), diary.getEmotion().getValue(), diary.getContent()))
                 .orElseThrow(() -> new DiaryNotFoundException(today + "의 일기를 찾을 수 없습니다."));
     }
 
-    public Diary updateDiary(String email, DiaryRequestDto dto){
-        return null;
+    @Transactional
+    public Diary updateDiary(DiaryRequestDto dto){
+        Diary savedDiary = diaryRepository.findById(dto.getId())
+                .orElseThrow(() -> new DiaryNotFoundException(dto.getToday() + "의 일기를 찾을 수 없습니다."));
+
+        Emotion emotion;
+        try {
+            emotion = Emotion.fromString(dto.getEmotion());
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("유효하지 않은 감정 값입니다: " + dto.getEmotion());
+        }
+
+        savedDiary.update(dto.getContent(), emotion);
+        return savedDiary;
     }
 }

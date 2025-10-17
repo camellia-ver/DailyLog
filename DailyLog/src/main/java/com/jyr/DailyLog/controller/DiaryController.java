@@ -28,6 +28,7 @@ public class DiaryController {
         boolean isWrite = !diaryService.isTodayDiary(userId, today);
         model.addAttribute("isWrite", isWrite);
 
+        System.out.println(isWrite);
         if (!isWrite){
             DiaryResponseDto savedDiary = diaryService.findSavedDiary(userId, today);
             model.addAttribute("savedDiary", savedDiary);

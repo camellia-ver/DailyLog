@@ -41,4 +41,13 @@ public class Diary extends BaseEntity{
         this.content = content;
         this.emotion = emotion;
     }
+
+    public void update(String content, Emotion emotion){
+        if (content != null && !content.isBlank()){
+            this.content = content;
+        }
+        if (emotion != null){
+            this.emotion = emotion;
+        }
+    }
 }

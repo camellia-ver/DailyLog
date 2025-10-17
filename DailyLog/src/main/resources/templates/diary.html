@@ -48,6 +48,7 @@
                 <form id="diaryForm">
                     <input type="hidden" id="selectedEmotion" th:value="${savedDiary != null ? savedDiary.emotion : ''}">
                     <input type="hidden" name="today" th:value="${today}" id="todayInput">
+                    <input type="hidden" id="diaryId" th:value="${savedDiary != null ? savedDiary.id : ''}">
 
                     <div class="mb-3">
                         <textarea id="diaryContent"

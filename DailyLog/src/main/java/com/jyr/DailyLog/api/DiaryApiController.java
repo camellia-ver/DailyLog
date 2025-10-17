@@ -1,10 +1,10 @@
 package com.jyr.DailyLog.api;
 
 import com.jyr.DailyLog.domain.Diary;
-import com.jyr.DailyLog.domain.User;
 import com.jyr.DailyLog.dto.DiaryRequestDto;
 import com.jyr.DailyLog.service.DiaryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,23 +25,28 @@ public class DiaryApiController {
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody DiaryRequestDto dto){
         Diary savedDiary = diaryService.createDiary(userDetails.getUsername(), dto);
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(savedDiary.getId())
-                .toUri();
 
         return ResponseEntity
-                .created(location)
+                .created(createLocation(savedDiary.getId()))
                 .build();
     }
 
-    @PutMapping("{date}")
+    @PutMapping
     public ResponseEntity<Void> updateDiary(
-            @AuthenticationPrincipal UserDetails userDetails,
-            @PathVariable String date,
             @RequestBody DiaryRequestDto dto
     ){
-        return null;
+        Diary updatedDiary = diaryService.updateDiary(dto);
+
+        return ResponseEntity
+                .created(createLocation(updatedDiary.getId()))
+                .build();
+    }
+
+    private URI createLocation(Long id){
+        return ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(id)
+                .toUri();
     }
 }
