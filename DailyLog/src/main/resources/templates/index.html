@@ -14,7 +14,7 @@
     <div class="col-md-6">
         <div class="card p-3">
             <div class="d-flex align-items-center">
-                <div class="me-3">
+                <div th:if="${todayDiary != null}">
                     <div class="card-emoji" th:switch="${todayDiary.emotion}">
                         <span th:case="'happy'">😊</span>
                         <span th:case="'sad'">😢</span>
@@ -22,10 +22,12 @@
                         <span th:case="'calm'">😐</span>
                         <span th:case="*">🙂</span>
                     </div>
+                    <div class="h6" th:text="|${todayDiary.emotion} · ${isTodayDiary ? '작성됨' : '작성가능'}|"></div>
                 </div>
-                <div>
-                    <div class="small text-muted">오늘의 감정</div>
-                    <div class="h6" th:text="|${todayDiary.emotion} · ${isTodayDiary ? '작성됨' : '작성가능'}|">행복 · 이미 작성됨</div>
+
+                <div th:if="${todayDiary == null}">
+                    <div class="card-emoji">🙂</div>
+                    <div class="h6">오늘 일기를 아직 작성하지 않았습니다.</div>
                 </div>
             </div>
         </div>

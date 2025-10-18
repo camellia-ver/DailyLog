@@ -30,8 +30,12 @@ public class DashboardController {
         boolean isTodayDiary = diaryService.isTodayDiary(userId, today);
         model.addAttribute("isTodayDiary",isTodayDiary);
 
-        DiaryResponseDto todayDiary = diaryService.findSavedDiary(userId, today);
-        model.addAttribute("todayDiary", todayDiary);
+        if (isTodayDiary) {
+            DiaryResponseDto todayDiary = diaryService.findSavedDiary(userId, today);
+            model.addAttribute("todayDiary", todayDiary);
+        }else {
+            model.addAttribute("todayDiary",null);
+        }
 
         return "index";
     }

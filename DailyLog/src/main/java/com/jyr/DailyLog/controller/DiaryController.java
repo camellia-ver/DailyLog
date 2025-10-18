@@ -29,7 +29,6 @@ public class DiaryController {
         boolean isWrite = !diaryService.isTodayDiary(userId, today);
         model.addAttribute("isWrite", isWrite);
 
-        System.out.println(isWrite);
         if (!isWrite){
             DiaryResponseDto savedDiary = diaryService.findSavedDiary(userId, today);
             model.addAttribute("savedDiary", savedDiary);
@@ -48,11 +47,9 @@ public class DiaryController {
 
         if (diaryService.isTodayDiary(userId, today)){
             DiaryResponseDto todayDiary = diaryService.findSavedDiary(userId, today);
-            model.addAttribute("emotion", todayDiary.getEmotion());
-            model.addAttribute("content", todayDiary.getContent());
+            model.addAttribute("diary", todayDiary);
         }else {
-            model.addAttribute("emotion", "none");
-            model.addAttribute("content", "none");
+            model.addAttribute("diary", null);
         }
 
         return "list";
