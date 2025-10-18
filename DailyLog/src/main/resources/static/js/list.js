@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 alert("일기가 업데이트되었습니다!");
-                window.location.href = "/list";
+                window.location.href = `/list?date=${date}`;
             } catch (error) {
                 alert("업데이트 중 오류가 발생했습니다.");
             }
