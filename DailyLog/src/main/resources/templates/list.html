@@ -92,6 +92,12 @@
                         </div>
                     </form>
                 </div>
+
+                <div th:if="${diary == null}" class="card p-3 mb-3">
+                    <div class="d-flex gap-2">
+                        <a href="/diary" class="btn">일기 쓰러 가기</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
