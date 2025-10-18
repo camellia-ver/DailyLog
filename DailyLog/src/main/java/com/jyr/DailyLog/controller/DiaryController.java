@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 
@@ -39,18 +40,18 @@ public class DiaryController {
 
     @GetMapping("/list")
     public String diaryList(Model model,
-                            @AuthenticationPrincipal UserDetails userDetails){
+                            @AuthenticationPrincipal UserDetails userDetails,
+                            @RequestParam(required = false) String date){
         Long userId = userService.findUser(userDetails.getUsername()).getId();
 
-        LocalDate today = LocalDate.now();
-        model.addAttribute("today", today.toString());
+        LocalDate selectedDate = (date == null) ? LocalDate.now() : LocalDate.parse(date);
+        model.addAttribute("today", selectedDate.toString());
 
-        if (diaryService.isTodayDiary(userId, today)){
-            DiaryResponseDto todayDiary = diaryService.findSavedDiary(userId, today);
-            model.addAttribute("diary", todayDiary);
-        }else {
-            model.addAttribute("diary", null);
-        }
+        DiaryResponseDto diary = diaryService.isTodayDiary(userId, selectedDate)
+                ? diaryService.findSavedDiary(userId, selectedDate)
+                : null;
+
+        model.addAttribute("diary", diary);
 
         return "list";
     }
