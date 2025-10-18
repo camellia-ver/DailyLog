@@ -1,5 +1,6 @@
 package com.jyr.DailyLog.controller;
 
+import com.jyr.DailyLog.domain.enums.Emotion;
 import com.jyr.DailyLog.dto.DiaryResponseDto;
 import com.jyr.DailyLog.service.DiaryService;
 import com.jyr.DailyLog.service.UserService;
@@ -23,6 +24,8 @@ public class DiaryController {
     @GetMapping("/diary")
     public String diary(Model model,
                         @AuthenticationPrincipal UserDetails userDetails){
+        model.addAttribute("emotions", Emotion.values());
+
         LocalDate today = LocalDate.now();
         model.addAttribute("today",today.toString());
 
@@ -51,6 +54,9 @@ public class DiaryController {
                 ? diaryService.findSavedDiary(userId, selectedDate)
                 : null;
 
+        if (diary != null && diary.getEmotion() != null){
+            model.addAttribute("diaryEmotion", Emotion.fromString(diary.getEmotion()));
+        }
         model.addAttribute("diary", diary);
 
         return "list";

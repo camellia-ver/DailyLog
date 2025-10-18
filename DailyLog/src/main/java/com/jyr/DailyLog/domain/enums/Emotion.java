@@ -6,14 +6,15 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Emotion {
-    HAPPY(7,"행복", "happy"),
-    SAD(3,"슬픔", "sad"),
-    ANGER(1,"분노", "angry"),
-    CALM(5,"평온", "calm");
+    HAPPY(7,"행복", "happy","😊"),
+    SAD(3,"슬픔", "sad","😢"),
+    ANGER(1,"분노", "angry","😡"),
+    CALM(5,"평온", "calm","😐");
 
     private final int score;
     private final String description;
     private final String value;
+    private final String emoji;
 
     public static Emotion fromString(String value){
         for (Emotion e : Emotion.values()){

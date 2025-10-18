@@ -17,25 +17,13 @@
                 <h5>감정 선택</h5>
                 <div class="d-flex flex-column gap-2">
                     <div class="d-flex gap-2">
-                        <div class="emoji-btn" data-emoji data-value="happy"
-                             th:classappend="${savedDiary != null and savedDiary.emotion == 'happy'} ? ' emoji-selected'">
-                            <div>😊</div>
-                            <div class="small">행복</div>
-                        </div>
-                        <div class="emoji-btn" data-emoji data-value="sad"
-                             th:classappend="${savedDiary != null and savedDiary.emotion == 'sad'} ? ' emoji-selected'">
-                            <div>😞</div>
-                            <div class="small">슬픔</div>
-                        </div>
-                        <div class="emoji-btn" data-emoji data-value="angry"
-                             th:classappend="${savedDiary != null and savedDiary.emotion == 'angry'} ? ' emoji-selected'">
-                            <div>😡</div>
-                            <div class="small">분노</div>
-                        </div>
-                        <div class="emoji-btn" data-emoji data-value="calm"
-                             th:classappend="${savedDiary != null and savedDiary.emotion == 'calm'} ? ' emoji-selected'">
-                            <div>😐</div>
-                            <div class="small">평온</div>
+                        <div th:each="emotion : ${emotions}"
+                             class="emoji-btn"
+                             data-emoji
+                             th:attr="data-value=${emotion.value}"
+                             th:classappend="${savedDiary != null and savedDiary.emotion == emotion.value} ? ' emoji-selected'">
+                            <div th:text="${emotion.emoji}"></div>
+                            <div class="small" th:text="${emotion.description}"></div>
                         </div>
                     </div>
                     <div class="small text-muted">선택하면 강조 표시됩니다.</div>

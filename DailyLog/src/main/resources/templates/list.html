@@ -27,14 +27,10 @@
                        <span id="selectedDateBadge"
                              class="badge"
                              th:classappend="${diary != null} ? ' bg-warning' : ' bg-secondary'"
-                             th:text="${diary != null ?
-                                today + ' · ' + (diary.emotion eq 'happy' ? '😊 행복' :
-                                                 diary.emotion eq 'sad' ? '😢 슬픔' :
-                                                 diary.emotion eq 'angry' ? '😡 분노' :
-                                                 diary.emotion eq 'calm' ? '😐 평온' : '🙂')
-                                : today + ' · 아직 작성되지 않음'}">
+                             th:text="${diaryEmotion != null ? today + ' · ' + diaryEmotion.emoji + ' ' + diaryEmotion.description
+                                       : today + ' · 아직 작성되지 않음'}">
                             10월 10일 · 🙂
-                       </span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -44,10 +40,8 @@
                 <div class="list-group">
                     <a href="#" class="list-group-item list-group-item-action" th:if="${diary != null}">
                         <div class="fw-semibold"
-                             th:text="|${today} · ${diary.emotion eq 'happy' ? '😊 행복' :
-                  diary.emotion eq 'sad' ? '😢 슬픔' :
-                  diary.emotion eq 'angry' ? '😡 분노' :
-                  diary.emotion eq 'calm' ? '😐 평온' : '🙂'}|">
+                             th:text="${diaryEmotion != null ? today + ' · ' + diaryEmotion.emoji + ' ' + diaryEmotion.description
+                                      : today + ' · 아직 작성되지 않음'}">
                             2025-10-10 · 😊 행복
                         </div>
                         <div class="small text-muted" th:text="${#strings.abbreviate(diary.content, 20)}">
