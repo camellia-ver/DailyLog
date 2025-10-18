@@ -35,11 +35,8 @@ public class DiaryApiController {
     public ResponseEntity<Void> updateDiary(
             @RequestBody DiaryRequestDto dto
     ){
-        Diary updatedDiary = diaryService.updateDiary(dto);
-
-        return ResponseEntity
-                .created(createLocation(updatedDiary.getId()))
-                .build();
+        diaryService.updateDiary(dto);
+        return ResponseEntity.noContent().build();
     }
 
     private URI createLocation(Long id){

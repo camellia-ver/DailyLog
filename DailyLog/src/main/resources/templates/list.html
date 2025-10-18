@@ -65,6 +65,9 @@
                 <div class="card p-3 mb-3" th:if="${diary != null}">
                     <h5 class="mb-3">일기 수정</h5>
                     <form id="editDiaryForm">
+                        <input type="hidden" name="today" th:value="${today}" id="todayInput">
+                        <input type="hidden" id="diaryId" th:value="${diary != null ? diary.id : ''}">
+
                         <div class="mb-3">
                             <label for="diaryMood" class="form-label">기분</label>
                             <select class="form-select" id="diaryMood">

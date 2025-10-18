@@ -13,15 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('diaryForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        // Thymeleaf에서 isWrite 값 가져오기
-        const isWrite = /*[[${isWrite} == true ? 'true' : 'false'}]]*/ 'false' === 'true';
+        const button = document.getElementById('submitBtn');
+        const buttonText = button.textContent.trim();
         const today = document.getElementById('todayInput').value;
         const emotion = document.getElementById('selectedEmotion').value;
         const content = document.getElementById('diaryContent').value;
         const id = document.getElementById('diaryId').value;
 
         const url = '/api/diaries';
-        const method = isWrite ? 'POST' : 'PUT';
+        const method = (buttonText === '저장') ? 'POST' : 'PUT';
 
         try{
             const response = await fetch(url, {

@@ -49,7 +49,7 @@ public class DiaryService {
     }
 
     @Transactional
-    public Diary updateDiary(DiaryRequestDto dto){
+    public void updateDiary(DiaryRequestDto dto){
         Diary savedDiary = diaryRepository.findById(dto.getId())
                 .orElseThrow(() -> new DiaryNotFoundException(dto.getToday() + "의 일기를 찾을 수 없습니다."));
 
@@ -61,6 +61,6 @@ public class DiaryService {
         }
 
         savedDiary.update(dto.getContent(), emotion);
-        return savedDiary;
+        diaryRepository.save(savedDiary);
     }
 }
