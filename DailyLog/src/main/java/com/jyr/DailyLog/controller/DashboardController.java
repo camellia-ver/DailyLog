@@ -1,12 +1,11 @@
 package com.jyr.DailyLog.controller;
 
-import com.jyr.DailyLog.domain.Diary;
+import com.jyr.DailyLog.domain.enums.Emotion;
 import com.jyr.DailyLog.dto.DiaryResponseDto;
 import com.jyr.DailyLog.service.DiaryService;
 import com.jyr.DailyLog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +31,9 @@ public class DashboardController {
 
         if (isTodayDiary) {
             DiaryResponseDto todayDiary = diaryService.findSavedDiary(userId, today);
+            String emtionDescription = Emotion.fromString(todayDiary.getEmotion()).getDescription();
+
+            model.addAttribute("emotion", emtionDescription);
             model.addAttribute("todayDiary", todayDiary);
         }else {
             model.addAttribute("todayDiary",null);
