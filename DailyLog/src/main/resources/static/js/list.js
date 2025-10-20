@@ -67,5 +67,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 필요 시 삭제 버튼 기능도 여기에 추가 가능
+    if(deleteBtn){
+        deleteBtn.addEventListener("click", async () => {
+            const id = document.getElementById('diaryId').value;
+
+            try {
+                const response = await fetch(`/api/diaries/${id}`, {
+                    method: "DELETE",
+                });
+
+                if (!response.ok) {
+                    throw new Error("삭제 실패");
+                }
+
+                alert("일기가 삭제 되었습니다!");
+                location.reload();
+            } catch (error) {
+                alert("삭제 중 오류가 발생했습니다.");
+            }
+        });
+    }
 });
