@@ -63,4 +63,10 @@ public class DiaryService {
         savedDiary.update(dto.getContent(), emotion);
         diaryRepository.save(savedDiary);
     }
+
+    public void deleteDiary(Long id){
+        Diary diary = diaryRepository.findById(id)
+                .orElseThrow(() -> new DiaryNotFoundException("일기가 존재하지 않습니다."));
+        diaryRepository.delete(diary);
+    }
 }

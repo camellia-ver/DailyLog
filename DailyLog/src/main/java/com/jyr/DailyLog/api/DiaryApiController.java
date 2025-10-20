@@ -25,9 +25,14 @@ public class DiaryApiController {
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody DiaryRequestDto dto){
         Diary savedDiary = diaryService.createDiary(userDetails.getUsername(), dto);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedDiary.getId())
+                .toUri();
 
         return ResponseEntity
-                .created(createLocation(savedDiary.getId()))
+                .created(uri)
                 .build();
     }
 
@@ -39,11 +44,9 @@ public class DiaryApiController {
         return ResponseEntity.noContent().build();
     }
 
-    private URI createLocation(Long id){
-        return ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(id)
-                .toUri();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDiary(@PathVariable Long id){
+        diaryService.deleteDiary(id);
+        return ResponseEntity.noContent().build();
     }
 }
