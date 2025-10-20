@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 @Controller
 @RequiredArgsConstructor
@@ -47,8 +48,17 @@ public class DiaryController {
                             @RequestParam(required = false) String date){
         Long userId = userService.findUser(userDetails.getUsername()).getId();
 
-        LocalDate selectedDate = (date == null) ? LocalDate.now() : LocalDate.parse(date);
+        LocalDate selectedDate;
+        try{
+            selectedDate = (date == null) ? LocalDate.now() : LocalDate.parse(date);
+        }catch (DateTimeParseException e){
+            selectedDate = LocalDate.now();
+        }
+
+        boolean isToday = LocalDate.now().equals(selectedDate);
+
         model.addAttribute("today", selectedDate.toString());
+        model.addAttribute("isToday", isToday);
 
         DiaryResponseDto diary = diaryService.isTodayDiary(userId, selectedDate)
                 ? diaryService.findSavedDiary(userId, selectedDate)
