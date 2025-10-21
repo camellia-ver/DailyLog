@@ -76,6 +76,7 @@ Diary
 
 | 기능    | Method | Endpoint            | 설명            |
 | ----- | ------ | ------------------- | -------------|
+| 회원가입   | POST   | /api/auth/signup     | 회원가입        |
 | 로그인   | POST   | /api/auth/login     | JWT 발급        |
 | 로그아웃  | POST   | /api/auth/logout    | 토큰 무효화        |
 | 일기 작성 | POST   | /api/diaries        | 일기 등록         |

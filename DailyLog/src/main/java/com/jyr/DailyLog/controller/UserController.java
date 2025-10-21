@@ -30,23 +30,6 @@ public class UserController {
         return "signup";
     }
 
-    @PostMapping("/signup")
-    public String signup(@ModelAttribute("signupForm") @Valid UserSignupRequestDto requestDto,
-                         BindingResult result,
-                         Model model){
-        if (result.hasErrors()){
-            return "signup";
-        }
-
-        try{
-            userService.signup(requestDto);
-            return "redirect:/login";
-        } catch (IllegalArgumentException e){
-            model.addAttribute("signupError", e.getMessage());
-            return "signup";
-        }
-    }
-
     @GetMapping("/find-password")
     public String findPassword(){
         return "find-password";

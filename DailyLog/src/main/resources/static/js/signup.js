@@ -82,23 +82,61 @@ document.addEventListener('DOMContentLoaded', () => {
     passwordInput.addEventListener('input', checkPasswordMatch);
     confirmInput.addEventListener('input', checkPasswordMatch);
 
-    // 폼 제출 시 최종 체크
     const signupForm = document.getElementById('signupForm');
-    signupForm.addEventListener('submit', (e) => {
-        const pwd = passwordInput.value;
-        const confirmPwd = confirmInput.value;
+    const errorBox = document.getElementById('signupError');
 
-        const valid = validatePassword(pwd);
-        const match = pwd === confirmPwd;
+    // 폼 제출 시 최종 체크
+    signupForm.addEventListener('submit', async(e) => {
+        e.preventDefault();
+
+        const nickname = document.getElementById('nickname').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = passwordInput.value;
+        const confirmPassword = confirmInput.value;
+
+        const valid = validatePassword(password);
+        const match = password === confirmPassword;
+
+        passwordErrorDiv.textContent = '';
+        confirmErrorDiv.textContent = '';
+        errorBox.style.display = 'none';
 
         if (!valid) {
-            e.preventDefault();
             passwordErrorDiv.textContent = '비밀번호 조건을 모두 충족해야 합니다.';
+            return;
+        }
+        if (!match) {
+            confirmErrorDiv.textContent = '비밀번호가 일치하지 않습니다.';
+            return;
         }
 
-        if (!match) {
-            e.preventDefault();
-            confirmErrorDiv.textContent = '비밀번호가 일치하지 않습니다.';
+        try{
+            const response = await fetch("/api/auth/signup",{
+                method: "POST",
+                headers: {"Content-Type":"application/json"},
+                body: JSON.stringify(
+                    {
+                        nickname,
+                        email,
+                        password,
+                        confirmPassword
+                    }
+                )
+            });
+
+            const result = await response.json();
+
+            if (response.ok){
+                alert(result.message);
+                window.location.href = "/login";
+            }else{
+                errorBox.style.display = "block";
+                errorBox.textContent = result.error || (result.errors ? result.errors.join(", ") : "회원가입 실패");
+            }
+        }catch(err){
+            console.log(err)
+            errorBox.style.display = "block";
+            errorBox.textContent = "서버 통신 중 오류가 발생했습니다.";
         }
-    });
+    })
 });
