@@ -34,4 +34,9 @@ public class UserController {
     public String findPassword(){
         return "find-password";
     }
+
+    @GetMapping("/setting")
+    public String setting(){
+        return "setting";
+    }
 }
