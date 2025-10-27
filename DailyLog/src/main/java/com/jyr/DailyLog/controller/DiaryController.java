@@ -71,9 +71,4 @@ public class DiaryController {
 
         return "list";
     }
-
-    @GetMapping("stats")
-    public String diaryStats(){
-        return "stats";
-    }
 }
