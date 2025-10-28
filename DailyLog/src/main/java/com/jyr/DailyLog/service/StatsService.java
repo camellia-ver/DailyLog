@@ -19,7 +19,7 @@ public class StatsService {
 
     public List<Map<String, Object>> getLast7DaysEmotionScore(){
         LocalDate endDate = LocalDate.now();
-        LocalDate sevenDaysAgo = endDate.minusDays(7);
+        LocalDate sevenDaysAgo = endDate.minusDays(6);
 
         List<Diary> diaries = diaryRepository.findByDateBetween(sevenDaysAgo, endDate);
 

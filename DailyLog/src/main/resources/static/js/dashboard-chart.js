@@ -1,35 +1,50 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // 차트 초기화
+document.addEventListener('DOMContentLoaded', async() => {
+    // 감정 점수 API 호출
+    let emotionData = [];
+    try{
+        const res = await fetch('/api/stats');
+        emotionData = await res.json();
+    }catch(e){
+        console.error("감정 점수 불러오기 실패:", e);
+        return;
+    }
+
+    // API 데이터 → 차트 형식으로 변환
+    const labels = emotionData.map(item => new Date(item.date).toLocaleDateString('ko-KR'));
+    const scores = emotionData.map(item => item.score);
+
+    // miniTrend chart
     if(window.Chart){
         const mini = document.getElementById('miniTrend');
         if(mini){
             new Chart(mini.getContext('2d'), {
                 type: 'line',
                 data: {
-                    labels: ['월','화','수','목','금','토','일'],
+                    labels,
                     datasets: [{
-                        label:'감정 지수',
-                        data:[3,4,2,4,5,4,3],
-                        tension:0.4,
-                        fill:false
+                        label: '감정 지수',
+                        data: scores,
+                        tension: 0.4,
+                        fill: false
                     }]
                 },
                 options: {
-                    plugins:{legend:{display:false}},
-                    scales:{y:{display:false}}
+                    plugins: {legend:{display:false}},
+                    scales: {y:{display:false}}
                 }
             });
         }
 
+        // emotionLine 차트
         const line = document.getElementById('emotionLine');
         if(line){
             new Chart(line.getContext('2d'), {
                 type:'line',
                 data:{
-                    labels:['1주전','6일전','5일전','4일전','3일전','2일전','어제'],
+                    labels,
                     datasets:[{
                         label:'감정 점수',
-                        data:[2.5,3.2,3.0,4.1,3.8,4.0,3.6],
+                        data:scores,
                         tension:0.3,
                         fill:true
                     }]
@@ -38,5 +53,4 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
-
 });
