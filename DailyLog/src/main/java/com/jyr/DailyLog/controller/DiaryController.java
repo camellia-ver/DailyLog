@@ -24,10 +24,11 @@ public class DiaryController {
 
     @GetMapping("/diary")
     public String diary(Model model,
-                        @AuthenticationPrincipal UserDetails userDetails){
+                        @AuthenticationPrincipal UserDetails userDetails,
+                        @RequestParam(required = false)String date){
         model.addAttribute("emotions", Emotion.values());
 
-        LocalDate today = LocalDate.now();
+        LocalDate today = (date == null) ? LocalDate.now() : LocalDate.parse(date);
         model.addAttribute("today",today.toString());
 
         Long userId = userService.findUser(userDetails.getUsername()).getId();
@@ -55,10 +56,7 @@ public class DiaryController {
             selectedDate = LocalDate.now();
         }
 
-        boolean isToday = LocalDate.now().equals(selectedDate);
-
         model.addAttribute("today", selectedDate.toString());
-        model.addAttribute("isToday", isToday);
 
         DiaryResponseDto diary = diaryService.isTodayDiary(userId, selectedDate)
                 ? diaryService.findSavedDiary(userId, selectedDate)
