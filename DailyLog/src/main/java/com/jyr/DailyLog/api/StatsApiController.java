@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/stats")
+@RequestMapping("/api/statistics")
 @RequiredArgsConstructor
 public class StatsApiController {
     private final StatsService statsService;
 
-    @GetMapping
+    @GetMapping("/seven-days-emotion-score")
     public ResponseEntity<List<Map<String, Object>>> getEmotionScore(){
         List<Map<String, Object>> emotionScores = statsService.getLast7DaysEmotionScore();
         return ResponseEntity.ok(emotionScores);

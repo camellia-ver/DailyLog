@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async() => {
     // 감정 점수 API 호출
     let emotionData = [];
     try{
-        const res = await fetch('/api/stats');
+        const res = await fetch('/api/statistics/seven-days-emotion-score');
         emotionData = await res.json();
     }catch(e){
         console.error("감정 점수 불러오기 실패:", e);
