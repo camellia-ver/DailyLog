@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // 연도 자동 갱신
     const yearEl = document.getElementById('year');
     if(yearEl) yearEl.textContent = new Date().getFullYear();

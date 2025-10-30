@@ -84,8 +84,9 @@ Diary
 | 일기 수정 | PUT    | /api/diaries | 일기 내용 수정      |
 | 일기 삭제 | DELETE | /api/diaries/{id} | 일기 삭제         |
 | 주간 감정 요약 | GET    | /api/statistics/seven-days-emotion-score     | 최근 7일간의 감정 점수 |
-| 감정 비율 | GET    | /api/statistics/emotion-ratio     | 각 감정들의 비율 |
-| 감정 추세 | GET    | /api/statistics/emotion-trend     | 감정 스코어의 추세 |
+| 감정 비율 | GET    | /api/statistics/emotion-ratio?period={}     | 각 감정들의 비율 |
+| 감정 추세 | GET    | /api/statistics/emotion-trend?period={}     | 감정 스코어의 추세 |
+| 감정 요약 | GET    | /api/statistics/summary?period={}     | 감정 요약 |
 
 ---
 
