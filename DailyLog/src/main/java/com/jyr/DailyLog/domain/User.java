@@ -73,4 +73,13 @@ public class User extends BaseEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void changeProfile(String nickname, String email) {
+        this.nickname = nickname;
+        this.email = email;
+    }
+
+    public void changePassword(String encodedPassword) {
+        this.password = encodedPassword;
+    }
 }

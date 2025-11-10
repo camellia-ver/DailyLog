@@ -4,7 +4,6 @@ import com.jyr.DailyLog.domain.User;
 import com.jyr.DailyLog.domain.enums.Role;
 import com.jyr.DailyLog.dto.UserSignupRequestDto;
 import com.jyr.DailyLog.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

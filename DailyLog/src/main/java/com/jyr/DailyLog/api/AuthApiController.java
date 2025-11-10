@@ -1,12 +1,10 @@
 package com.jyr.DailyLog.api;
 
 import com.jyr.DailyLog.dto.LoginRequestDto;
-import com.jyr.DailyLog.dto.LoginResponseDto;
 import com.jyr.DailyLog.dto.UserSignupRequestDto;
 import com.jyr.DailyLog.security.JwtUtil;
 import com.jyr.DailyLog.service.UserService;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController

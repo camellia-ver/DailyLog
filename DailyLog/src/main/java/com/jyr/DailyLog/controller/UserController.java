@@ -1,10 +1,13 @@
 package com.jyr.DailyLog.controller;
 
+import com.jyr.DailyLog.domain.User;
 import com.jyr.DailyLog.dto.UserSignupRequestDto;
 import com.jyr.DailyLog.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +39,11 @@ public class UserController {
     }
 
     @GetMapping("/setting")
-    public String setting(){
+    public String setting(Model model,
+                          @AuthenticationPrincipal UserDetails userDetails){
+        User user = userService.findUser(userDetails.getUsername());
+        model.addAttribute("user", user);
+
         return "setting";
     }
 }
