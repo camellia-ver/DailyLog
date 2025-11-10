@@ -1,5 +1,6 @@
 package com.jyr.DailyLog.api;
 
+import com.jyr.DailyLog.dto.DeleteUserRequest;
 import com.jyr.DailyLog.dto.LoginRequestDto;
 import com.jyr.DailyLog.dto.UserSignupRequestDto;
 import com.jyr.DailyLog.dto.UserUpdateRequest;
@@ -22,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.attribute.UserPrincipal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,5 +127,24 @@ public class AuthApiController {
         response.addCookie(cookie);
 
         return ResponseEntity.ok(Map.of("success",true));
+    }
+
+    @PostMapping("/user-delete")
+    public ResponseEntity<?> deleteUser(@RequestBody DeleteUserRequest request,
+                                        @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            Long userId = userService.findUser(userDetails.getUsername()).getId();
+
+            boolean deleted = userService.deleteUser(userId, request.getCurrentPassword());
+            if (deleted) {
+                return ResponseEntity.ok().body(Map.of("message", "회원 탈퇴 완료"));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(Map.of("error", "비밀번호가 올바르지 않습니다."));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "회원 탈퇴 중 오류가 발생했습니다."));
+        }
     }
 }

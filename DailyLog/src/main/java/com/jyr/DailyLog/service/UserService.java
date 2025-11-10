@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -89,5 +90,21 @@ public class UserService {
         }
 
         return changeStatus;
+    }
+
+    public boolean deleteUser(Long userId, String currentPassword) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) return false;
+
+        User user = userOpt.get();
+
+        // 비밀번호 확인
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            return false;
+        }
+
+        // 실제 탈퇴 처리 (DB에서 삭제)
+        userRepository.delete(user);
+        return true;
     }
 }
