@@ -2,6 +2,7 @@ package com.jyr.DailyLog.api;
 
 import com.jyr.DailyLog.dto.LoginRequestDto;
 import com.jyr.DailyLog.dto.UserSignupRequestDto;
+import com.jyr.DailyLog.dto.UserUpdateRequest;
 import com.jyr.DailyLog.security.JwtUtil;
 import com.jyr.DailyLog.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -16,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +55,33 @@ public class AuthApiController {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/user-update")
+    public ResponseEntity<?> userUpdate(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody UserUpdateRequest requestDto,
+            BindingResult result) {
+
+        if (result.hasErrors()) {
+            List<String> errors = result.getAllErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .toList();
+            return ResponseEntity.badRequest().body(Map.of("errors", errors));
+        }
+
+        try {
+            Map<String, Boolean> changeStatus = userService.userUpdate(userDetails.getUsername(), requestDto);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "회원정보 수정이 완료되었습니다.");
+            response.putAll(changeStatus);
+
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", e.getMessage()));
         }
     }
 
